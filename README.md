@@ -1,90 +1,227 @@
-## 🧠 Desafio Técnico – Sistema de Gestão de Projetos e Demandas
+Sistema de Gerenciamento de Projetos e Tarefas
 
-### 📘 Contexto
-Sua missão é desenvolver uma **API RESTful em Java com Spring Boot** para gerenciar **projetos e tarefas (demandas)** de uma empresa.  
-O sistema será utilizado por um time de desenvolvimento para organizar suas entregas, acompanhar o status das tarefas e realizar análises simples.
+Um sistema completo desenvolvido em Spring Boot para gerenciamento de projetos e tarefas, com autenticação JWT e controle de acesso baseado em roles.
+✨ Funcionalidades
+🔐 Autenticação e Autorização
 
----
+    Registro de usuários com diferentes níveis de acesso
 
-## 🎯 Requisitos Técnicos
+    Login com JWT (JSON Web Tokens)
 
-### 🧱 1. Modelagem de Domínio
+    Controle de acesso baseado em roles (USER, ADMIN, SUPERVISOR)
 
-A modelagem pode ser modificada pelo inscrito. Porém, precisa ser justificado o motivo.
+    Senhas criptografadas com BCrypt
 
-#### `Project`
-| Campo | Tipo | Descrição |
-|-------|------|-----------|
-| `id` | UUID/Long | Identificador |
-| `name` | String (3–100) | **Obrigatório** |
-| `description` | String | Opcional |
-| `startDate` | Date | Início do projeto |
-| `endDate` | Date | Opcional |
+📋 Gerenciamento de Tarefas
 
-#### `Task`
-| Campo | Tipo | Descrição |
-|-------|------|-----------|
-| `id` | UUID/Long | Identificador |
-| `title` | String (5–150) | **Obrigatório** |
-| `description` | String | Detalhes da tarefa |
-| `status` | Enum | TODO / DOING / DONE |
-| `priority` | Enum | LOW / MEDIUM / HIGH |
-| `dueDate` | Date | Data limite |
-| `projectId` | FK(Project) | Relacionamento |
+    ✅ Criar, editar, visualizar e excluir tarefas
 
----
+    🔍 Busca com filtros avançados (status, prioridade, projeto)
 
-### 🌐 2. Endpoints REST
+    📊 Atualização de status das tarefas
 
-| Método | Endpoint | Descrição |
-|---------|-----------|-----------|
-| **POST** | `/projects` | Criar novo projeto (`name` obrigatório) |
-| **GET** | `/projects` | Listar todos os projetos (paginação opcional) |
-| **POST** | `/tasks` | Criar nova tarefa vinculada a um projeto |
-| **GET** | `/tasks?status=&priority=&projectId=` | Buscar tarefas com filtros opcionais |
-| **PUT** | `/tasks/{id}/status` | Atualizar apenas o status da tarefa |
-| **DELETE** | `/tasks/{id}` | Remover tarefa |
+    🏷️ Prioridades (BAIXA, MÉDIA, ALTA)
 
----
+    📅 Datas de vencimento
 
-## ✅ Requisitos Obrigatórios
-- 🧑‍💻 **Java 17+** e **Spring Boot 3+**  
-- 🧠 **Spring Data JPA**  
-- 🗄️ Banco Relacional (**PostgreSQL** ou **H2**)  
-- ✔️ **Bean Validation**  
-- 🧪 **Testes Automatizados**  
-  - Unitários (Services mockados)  
-  - Integração (Controllers com MockMvc ou Testcontainers)  
-- ⚠️ Tratamento de erros com `@ControllerAdvice`  
-- 📦 Uso de **DTOs** (`record` ou classes simples)  
-- 📘 **README** explicando como rodar o projeto
+👥 Controle de Acesso por Role
+Role	Permissões
+USER	Criar, editar, visualizar e excluir próprias tarefas
+SUPERVISOR	Todas permissões USER + gerenciar projetos
+ADMIN	Todas permissões + exclusão de projetos
+🛠️ Tecnologias Utilizadas
 
----
+    Java 17+
 
-## 🏅 Diferenciais (Pontos Extras)
-- 🧭 Documentação **Swagger / OpenAPI**  
-- 🔐 Autenticação simples com **JWT** ou Basic Auth  
-- 🐳 Configuração de **Docker** / **docker-compose**  
-- ⚡ Uso de **MapStruct** para mapeamento de DTOs  
-- 🔍 Testes de API com **RestAssured**
+    Spring Boot 3.x
 
----
+    Spring Security com JWT
 
-## 🛠️ Tags
-`#Java` `#SpringBoot` `#Backend` `#DesafioTecnico`  
-`#API` `#RestAPI` `#Docker` `#Kubernetes`  
-`#PostgreSQL` `#Oracle` `#JPA` `#Swagger`  
-`#RestAssured` `#CleanCode` `#SoftwareEngineering`
+    Spring Data JPA
 
----
+    H2 Database (desenvolvimento) / PostgreSQL (produção)
 
-### 💡 Dica
-> Foque em **organização, boas práticas e clareza do código**.  
-> Um bom README e commits bem descritos também serão avaliados. 😉
+    SpringDoc OpenAPI 3 (Swagger)
 
----
+    Maven
 
-### 🧾 Licença
-Este projeto foi desenvolvido exclusivamente para o **processo seletivo SIS Innov & Tech** e não deve ser utilizado para fins comerciais.
+    Bean Validation
 
----
+ 
+
+📚 Documentação da API
+Acesse a documentação interativa:
+text
+
+http://localhost:8080/swagger-ui/index.html
+
+🔑 Autenticação no Swagger
+
+    Acesse o Swagger UI
+
+    Clique no botão "Authorize" (cadeado)
+
+    Insira seu token no formato: Bearer seu_token_jwt
+
+🚀 Como Executar
+Pré-requisitos
+
+    Java 17 ou superior
+
+    Maven 3.6+
+
+    PostgreSQL (opcional para produção)
+
+Passos para execução
+
+    Clone o repositório
+
+bash
+
+git clone https://github.com/flavioteixeira1/dev.matheuslf.desafio.inscritos
+cd dev.matheuslf.desafio.inscritos
+
+    Configure o banco de dados (application.properties)
+
+properties
+
+# Para H2 (desenvolvimento)
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.username=sa
+spring.datasource.password=
+
+# Para PostgreSQL (produção)
+spring.datasource.url=jdbc:postgresql://localhost:5432/gerenciamento
+spring.datasource.username=seu_usuario
+spring.datasource.password=sua_senha
+
+    Execute a aplicação
+
+bash
+
+mvn spring-boot:run
+
+    Acesse a aplicação
+
+text
+
+http://localhost:8080
+
+📡 Endpoints Principais
+Autenticação
+
+    POST /autenticacao/registrar - Registrar novo usuário
+
+    POST /autenticacao/logar - Login e obtenção de token
+
+Tarefas
+
+    GET /tasks - Listar tarefas (com filtros opcionais)
+
+    POST /tasks - Criar nova tarefa
+
+    GET /tasks/{id} - Buscar tarefa por ID
+
+    PUT /tasks/{id}/status - Atualizar status da tarefa
+
+    DELETE /tasks/{id} - Excluir tarefa
+
+Projetos
+
+    GET /projects - Listar projetos
+
+    POST /projects - Criar projeto (ADMIN/SUPERVISOR)
+
+    PUT /projects/{id} - Editar projeto (ADMIN/SUPERVISOR)
+
+    DELETE /projects/{id} - Excluir projeto (ADMIN)
+
+🔍 Exemplos de Uso
+Registrar usuário
+json
+
+POST /autenticacao/registrar
+{
+    "name": "João Silva",
+    "email": "joao@email.com",
+    "password": "senha123",
+    "role": "USER"
+}
+
+Login
+json
+
+POST /autenticacao/logar
+{
+    "email": "joao@email.com",
+    "password": "senha123"
+}
+
+Criar tarefa
+json
+
+POST /tasks
+{
+    "title": "Implementar feature X",
+    "description": "Desenvolver a funcionalidade X do sistema",
+    "dueDate": "2024-12-31T23:59:59",
+    "status": "TODO",
+    "priority": "HIGH",
+    "projecttotaskDTO": {
+        "id": 1
+    }
+}
+
+Buscar tarefas com filtros
+text
+
+GET /tasks?projectId=1&status=DOING&priority=HIGH
+
+🗄️ Estrutura do Projeto
+text
+
+src/
+├── main/
+│   ├── java/
+│   │   └── dev/matheuslf/desafio/inscritos/
+│   │       ├── Controller/        # Controladores REST
+│   │       ├── Services/          # Lógica de negócio
+│   │       ├── Repository/        # Interfaces JPA
+│   │       ├── SecurityConfig/    # Configurações de segurança
+│   │       ├── dto/              # Objetos de transferência de dados
+│   │       └── model/            # Entidades JPA
+│   └── resources/
+│       └── application.properties
+
+🔒 Segurança
+
+    Tokens JWT com expiração configurável
+
+    BCrypt para hash de senhas
+
+    CORS configurado
+
+    Validação de dados com Bean Validation
+
+    Proteção contra referências circulares com DTOs
+
+🐛 Solução de Problemas
+Problema comum: Recursão infinita no JSON
+
+Solução implementada: Uso de DTOs para quebrar o ciclo de referências entre Task ↔ Project
+Problema comum: Autenticação no Swagger
+
+Solução: Configuração do security scheme Bearer Token no OpenAPI
+📈 Próximas Melhorias
+
+    Paginação nas consultas
+
+    Cache de consultas frequentes
+
+    Upload de arquivos para tarefas
+
+    Notificações por email
+
+    Métricas e monitoramento
+
+

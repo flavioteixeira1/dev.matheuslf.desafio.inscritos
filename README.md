@@ -70,7 +70,7 @@ Pré-requisitos
 
     Maven 3.6+
 
-    PostgreSQL (opcional para produção)
+    PostgreSQL 
 
 Passos para execução
 
@@ -79,21 +79,26 @@ Passos para execução
 bash
 
 git clone https://github.com/flavioteixeira1/dev.matheuslf.desafio.inscritos
+
 cd dev.matheuslf.desafio.inscritos
+
 
     Configure o banco de dados (application.properties)
 
-properties
+adicione as properties 
 
 # Para H2 (desenvolvimento)
 spring.datasource.url=jdbc:h2:mem:testdb
 spring.datasource.username=sa
 spring.datasource.password=
 
-# Para PostgreSQL (produção)
+# Para PostgreSQL (exemplo com database gerenciamento - não se esqueça de criar antes)
 spring.datasource.url=jdbc:postgresql://localhost:5432/gerenciamento
 spring.datasource.username=seu_usuario
 spring.datasource.password=sua_senha
+
+
+
 
     Execute a aplicação
 
@@ -101,7 +106,12 @@ bash
 
 mvn spring-boot:run
 
-    Acesse a aplicação
+    Acesse a aplicação pelo swagger: http://localhost:8080/swagger-ui/index.html
+
+    e crie o seu usuário em : /autenticacao/registrar
+
+
+
 
 text
 
@@ -172,12 +182,15 @@ POST /tasks
     }
 }
 
+
 Buscar tarefas com filtros
+
 text
 
 GET /tasks?projectId=1&status=DOING&priority=HIGH
 
 🗄️ Estrutura do Projeto
+
 text
 
 src/

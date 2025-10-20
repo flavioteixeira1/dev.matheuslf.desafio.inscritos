@@ -8,6 +8,7 @@ import dev.matheuslf.desafio.inscritos.Repository.TaskRepository;
 import dev.matheuslf.desafio.inscritos.dto.ProjecttotaskDTO;
 import dev.matheuslf.desafio.inscritos.dto.TaskCreateDTO;
 import dev.matheuslf.desafio.inscritos.dto.TaskDTO;
+import dev.matheuslf.desafio.inscritos.exception.ResourceNotFoundException;
 import dev.matheuslf.desafio.inscritos.model.Project;
 import dev.matheuslf.desafio.inscritos.model.Task;
 import dev.matheuslf.desafio.inscritos.model.TaskStatus;
@@ -87,7 +88,8 @@ public class TaskService {
     @Transactional
     public Task updateStatus(Long taskId, TaskStatus newStatus) {
         Task task = taskRepository.findById(taskId)
-                .orElseThrow(() -> new RuntimeException("Tarefa não encontrada com id: " + taskId));
+                //.orElseThrow(() -> new RuntimeException("Tarefa não encontrada com id: " + taskId));
+                .orElseThrow(() -> new ResourceNotFoundException("Task", "id", taskId.toString()));
         
         task.setStatus(newStatus);
         return taskRepository.save(task);
@@ -97,7 +99,7 @@ public class TaskService {
     @Transactional
     public void delete(Long taskId) {
         if (!taskRepository.existsById(taskId)) {
-            throw new RuntimeException("Tarefa não encontrada com id: " + taskId);
+            throw new ResourceNotFoundException("Task", "id", taskId.toString());
         }
         taskRepository.deleteById(taskId);
     }
@@ -135,6 +137,9 @@ public class TaskService {
     return taskDTO;
 }
 
+
+
+   
 
 
 
